@@ -1,0 +1,177 @@
+Shell Script 
+===========================================
+1. Variable assigning and printing
+-----------------------------------------
+#!/bin/bash
+echo "Setup and configure server"
+file_name=config.yaml
+config_files=$(ls config)
+echo "Using file $file_name to configure something"
+echo "Here are all configuration file : $config_files
+
+2. If Else Condition Examples
+-----------------------------------------
+a. If config is directory then read the contents else create one.
+
+#!/bin/bash
+if [ -d "config" ]
+then
+	echo "reading config directory contents"
+	config_files=$(ls config)
+else
+	echo "config dir not found. Creating one"
+	mkdir config
+fi
+
+++++++++++++++++++++++++++++++++++
+
+b. If config.yaml is file then read the contents else create one.
+
+#!/bin/bash
+if [ -f "config.yaml" ]
+then
+	echo "Reading file contents"
+	cat config.yaml
+else
+	echo "Creating one"
+	touch config.yaml
+
+++++++++++++++++++++++++++++++++++++
+
+c. Number Comparision
+
+-eq = equal, -ne = not equal, 
+-gt = greater than, -lt = less than, 
+-ge = greater than equal, -le = less than equal
+
+#!/bin/bash
+num_file=10
+
+if [ "$num_file" -eq 10 ]
+then
+	echo "Given no match"
+else
+	echo "Not Match"
+
+++++++++++++++++++++++++++++++++++++++++
+
+d. String Comparision
+
+==, !=, 
+-z = to check string is zero length, 
+-n = to check string is non zero length,
+str = check string is not empty
+
+#!/bin/bash
+
+group="dev"
+
+if [ "$group" == "nana" ]
+then
+	echo "configure to server"
+elif [ "$group" == "admin" ]
+then
+	echo "Adminster the server"
+else
+	echo "No Persmission"
+fi
+
++++++++++++++++++++++++++++++++++++++++++
+
+e. Passing Parameter from outside while running script
+
+Run the script with giving an parameter a group - 
+
+eq => ./script.sh Dev # here Dev is the group name which will be store inside script
+
+#!/bin/bash
+
+group=$1
+
+if [ "$group" == "nana" ]
+then
+	echo "configure to server"
+elif [ "$group" == "admin" ]
+then
+	echo "Adminster the server"
+else
+	echo "No Persmission"
+fi
+
+# In same way you can pass multi params from outside by increasing the no from 1 to 9
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+f. Reading Input from outside with prompt.
+
+read -p "Please Enter your Password: " user_pwd
+echo "Thanks for your password $user_pwd"
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+g. Handling multi params pass through the running script command:
+
+echo "All Params: $*"
+echo "Count of Pramas: $#"
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+3. Shell Loops
+------------------------------
+
+Gone through all params provided in while executing
+
+#!/bin/bash
+
+echo "All Params: $*"
+echo "Count of Pramas: $#"
+
+for param in $*
+ do
+	if [ -d "$param" ]
+	then
+		echo "Executing script in config"
+	fi
+	echo $param
+ done
+
+++++++++++++++++++++++++++++++++++++++++++++
+
+
+4. While Loops 
+-----------------------------
+
+sum=0
+while true
+  do
+  	read -p "enter a score: " score
+
+	if [ "$score" == 'q']
+	then
+		break
+	fi
+
+	sum=$(($sum+$score))
+	echo "Total score: $sum"
+  done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

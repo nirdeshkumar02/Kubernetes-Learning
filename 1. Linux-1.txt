@@ -1,0 +1,86 @@
+Basic Commands
+-------------------------------------
+uname -a = Show system and kernal
+cat /etc/os-release = Linux Distribution
+lscpu = Detailed info about cpus
+lsmem = Detailed info about memory
+
+
+User and Permission
+--------------------------------------------------
+Account - Superuser Account, User Account, Service Account
+Permission - User level, Group Level
+
+/etc/passwd - contain user with there user data but passwd is in x which means it store in another file /etc/shadow
+adduser/useradd admin = adding user with name admin
+addgroup/groupadd devop = adding group with name devops
+passwd admin = Update the passwd for user
+adduser/addgroup - user friendly should use in interactive manner.
+useradd/groupadd - you need to provide info by yourself, use it in automations
+usermod -g devops tom - add devops group for tom as primary
+usermod -aG newcreated tom - add tom to new newcreated group
+usermod -G admin,other tom - add tom to other groups like admin, other
+groups tom - list of groups for tom includes in.
+useradd -G devops nikhil - crate new user nikhil to group devops but also nikhil name group will be created.
+delgroup tom - delete group tom
+gpasswd -d nikhili devops - delete nikhil from devops group
+
+
+File Ownership and Permission
+------------------------------------------------------
+chown tom:devops test.txt = change owner of test.txt file to user tom and group devops
+chown admin test.txt = change owner to admin on test.txt file
+chgrp admin test.txt = change group to admin on test.txt file
+
+d/-/c/l = directory/file/character-device-file/symbolic file
+r/w/x/- = read/write/execute/null
+drwxrwxr-x = directory/owner-permission/group-permission/other-permission on a file
+4/2/1 = read/write/execute
+
+chmod -x/+r test.txt = remove execute-permission/add-read permission to all.
+chmod u+r/g-x/o+w test.txt = change permission to tst.txt file for owner to read/ group to read and write/ other to write only.
+chmod g=rwx test.txt = give all permission to group on test.txt file. 
+chmod a=rwx test.txt = give all permission to all on test.txt file.
+chmod 600 test.txt = give read and write permission to owner and no permission to group and other.
+
+
+Vi/Vim - in command mode only
+-------------------------------
+dd - delete line
+d10d - remove 10 lines
+u - undo changes
+A - end of line and switch to insert
+0/$ - begin of line/end of line without insert mode
+5G - Goto line no 5
+/patter - serach for pattern
+n/N - next/prev pattern in search
+:%s/pattern/new - replace pattern to new
+
+
+CLI Command
+---------------------------------------
+cat /var/log/syslog | less = Display one page text at one time of logs.
+history | grep sudo = give all previosuly used command from history where sudo is in command.
+history | grep "sudo chmod" = here sudo chmod will work as single world.
+history | grep sudo | less = show command one by one page.
+clear; sleep 1; echo "Hope you are good" = will execute one by one. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

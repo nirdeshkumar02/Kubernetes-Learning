@@ -1,0 +1,33 @@
+Kubernetes
+============
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Kubernetes Components
+======================
+
+Master Node
+===============
+1. Api Server
+2. Controller
+3. ETCD
+4. Scheduler
+
+Worker Node
+============
+1. Kubelet
+2. Kube Proxy
+3. Container RunTime
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Kubernetes Service
+==================
+1. Cluster IP
+2. Headless Service - helpful Stateful application where 1 pod wants to connect with another pod for data synchoronization. just pass ClusterIp as None in service.yaml file
+3. NodePort
+4. Loadbalancer for external/internal
+5. Ingress for external
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+

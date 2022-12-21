@@ -1,0 +1,42 @@
+git pull --rebase/-r  => You did some changes in the workspace and want to push it to remote but on remote there were some new changes, So first you need to pull the new
+changes to your workspace and then you are able to push your changes to remote. Hence there will be 2 commits msg - 1. Merge Msg, 2. Your commit msg
+
+To avoid this merge msg you can run "git pull -r" which merge the remote branch to your workspace and your changes will be on the top of stack. Hence when you pushed this 
+changes to remote, there will be no merge msg.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+git log => Shows the commit history done by you on a branch.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+git checkout <commit hash> => Checkout to the commit for which you provide the hash commit or previous version of code.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+undoing commits -
+==================
+git reset = If You did commits locally or remote and now you want to move previous commit then -- hard is used to revert the commit and also discard the changes
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+ 
+--hard HEAD~1 => --hard is used to revert the commit and also discard the changes from your working directory. 
+--soft HEAD~1 => --soft is used to revert the commit but not discard the changes, You still have the changes you made during your new commit.
+
+HEAD~1 => Here 1 represent the commit, how many commit you want to reset.
+
+if you pushed the changes to remote then after "git reset" you need to make "git push --force" command.
+
+git revert = It is also same as git reset.
+------------------------------------------
+
+The major difference between git reset and git revert is Git Revert create a new commit to revert the old commits msg. whereas Git Reset just removed the old commit.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Changing commits 
+==================
+
+git commit --amend => If you did some commit and you did some changes again and think these new changes belongs to previous commit Then this command add your new commit ahead of previous commit.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
