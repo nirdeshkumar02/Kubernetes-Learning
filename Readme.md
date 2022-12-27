@@ -18,3 +18,8 @@ It is a simple k8s application where we are connecting mongodb to mongo ui with 
 Now, You can access the mongo-express UI connected with the mongoDB Application.
 
 ### HELM-MONGO-APP
+Its a simple helm application which is helpful in deploying same above application but in less code because of helm charts. We used helm charts to deploy mongoDB Application As StateFul Set with 3 Replication and for data persistent used Cloud-Storage.
+Mongo-Express is a UI Application which will be deployed as Deployment Component with service to allow traffic and connect to mongoDB StateFul Set as an Internal Service.
+For Public, We Will Use Ingress Service which will forward the traffic to Mongo-Express Service Port and it will route the data to MongoDB using Internal Service.
+#### Application Workflow
+![Helm-Mongo-App Workflow](https://github.com/nirdeshkumar02/Kubernetes-Learning/blob/master/helm-mongo-application.png)
