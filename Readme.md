@@ -56,7 +56,7 @@ For Public, We Will Use Ingress Service which will forward the traffic to Mongo-
 
 Your Application is now available to access from outside world using the hostname provide in the nginx-ingress-service file. 
 
-Deploying Private Docker Image to Kubernetes
+PRIVATE IMAGE DEPLOYMENT
 =============================================
 Let We Build a CICD Pipeline which Checkout the code from GitHub, Do Some Test, Build/Package the Application and Pushed image to Private Repository like Docker Private Registry, AWS ECR etc... Now, This Project is all about how can you deploy this private image to Kubernetes.
 
@@ -67,14 +67,61 @@ Let We Build a CICD Pipeline which Checkout the code from GitHub, Do Some Test, 
 #### Prerquisites - You should have a Private Registry having Image whether it is AWS ECR or Docker Private Registry.
 
 #### Steps
+
+- If You are Using Minikube then first you need to run `minikube ssh` command to enter inside your minikube cluster becasue minikube is also using `driver=docker` so that we need to perform these operation inside minikube.
+- If You are Using K8s Cluster Then You are good to go with these command.
+
+#### FROM STEP 1 - 4 IS VERY USEFUL WHEN YOU HAVE MORE THAN 1 DIFFERENT DOCKER REGISTRY FROM DIFFERENT ACCOUNT, SO THAT YOU CAN LOGIN TO EACH ACCOUNT AND THOSE CREDENTIAL WILL STORE IN ".docker/config.json" FILE AND YOU CAN USE THIS FILE WITHOUT ANY HEADACHE AT ONE TIME.
+
+#### FROM STEP 5 IS USEFUL WHEN YOU HAVE ONLY 1 DOCKER ACCOUNT FROM WHERE YOU WANT TO PULL THE IMAGE FROM PRIVATE REPO, SO IF THIS CONDITION SATISFY YOUR NECESSITY THEN YOU CAN DIRECTLY JUMP TO THE STEP 5. 
+
 1. Login to your private registry -
-#### If You are using AWS ECR as Your Private Registry
+    #### If You are using AWS ECR as Your Private Registry
     ```
     # Print Full Docker Login Command For AWS ECR
     aws ecr get-login
     # Now, Copy that full command from the terminal and Run it.
     ```
-#### If You are using Docker Private Registry
+    #### If You are using Docker Private Registry
     ```
     docker login -u <username> -p <password>
+    ```
+2. Login will generate a config.json file under .docker directory using which we will create our `Secret File`.
+    ```
+    cat .docker/config.json
+    ```
+3. If Using Minikube - Copy that .docker/config.json file from minikube cluster to your host (laptop)
+    ```
+    # Command - scp -i <ssh-key> <user@ip-address:file-name> <destination> - Replacing Existing Docker Config Json File on Host with the file.
+    scp -i $(minikube ssh-key) docker@$(minikube ip):.docker/config.json C:\Users\nksai\.docker/config.json
+    ```
+4. Create `Secret File` with the docker config.json file.
+    #### Using Imperetive (Command)
+    ```
+    kubectl create secret generic private-registry-key --from-file=.dockerconfigjson=.docker/config.json --type=kubernetes.io/dockerconfigjson
+    kubect get secret
+    ```
+    #### Using Declarative (Creating Secret File)
+    ```
+    # Run the command and copy the encoded text from terminal
+    cat .docker/config.json | base64
+    # Add the copied text to your secret configuration file under the attribute `.dockerconfigjson`.
+    # Now, Deploy the Secret Configuration file 
+    kubectl apply -f <fileName>
+    ```
+5. Create `Secret File` with the credentials.
+    #### For Docker Private Registry
+    ```
+    kubectl create secret docker-registry private-registry-key --docker-server=https://private-repo --docker-username=<username> --docker-password=<password>
+    ```
+    #### For AWS ECR Private Registry
+    ```
+    # Get Details of Docker creds by running the command
+    aws ecr get-login
+    # Put the required field value to the below command
+    kubectl create secret docker-registry private-registry-key --docker-server=https://<accountId>.dkr.ecr.<region-name>.amazonaws.com --docker-username=AWS --docker-password=<password>
+    ```
+6. Create `Deployment File` to use the image, secret and deploy the file.
+    ```
+    kubectl apply -f <deployment-fileName>
     ```
