@@ -56,7 +56,7 @@ For Public, We Will Use Ingress Service which will forward the traffic to Mongo-
 
 Your Application is now available to access from outside world using the hostname provide in the nginx-ingress-service file. 
 
-PRIVATE IMAGE DEPLOYMENT
+PRIVATE-IMAGE-DEPLOYMENT
 =============================================
 Let We Build a CICD Pipeline which Checkout the code from GitHub, Do Some Test, Build/Package the Application and Pushed image to Private Repository like Docker Private Registry, AWS ECR etc... Now, This Project is all about how can you deploy this private image to Kubernetes.
 
