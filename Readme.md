@@ -23,3 +23,25 @@ Mongo-Express is a UI Application which will be deployed as Deployment Component
 For Public, We Will Use Ingress Service which will forward the traffic to Mongo-Express Service Port and it will route the data to MongoDB using Internal Service.
 #### Application Workflow
 ![Helm-Mongo-App Workflow](https://github.com/nirdeshkumar02/Kubernetes-Learning/blob/master/helm-mongo-application.png)
+#### Steps
+1. Create EKS Cluster with Two Nodes on AWS and Configure it.
+2. Check If Helm is installed on Cluster? If not Intall helm.
+3. Add Bitnami Repo to Kubernetes which will helpful to deploy mongoDB.
+    `helm repo add bitnami https://charts.bitnami.com/bitnami`
+4. Now, Install MongoDB Using Helm Charts with overriding the values from file `mongodb-values.yaml`.
+    `helm install mongodb --values mongodb-values.yaml bitnami/mongodb`
+5. Here, MongoDB is deployed to kubernetes with persistent volume, services, secrets which we also deployed mongodb application above by creating these configuration file.
+6. Create a Deployment File `mongo-express.yaml` and Service File `mongo-express-service.yaml` for mongo-express UI Application.
+7. Deploy these configuration file.
+    ```
+    kubectl apply -f mongo-express.yaml
+    kubectl apply -f mongo-express-service.yaml
+    ```
+8. Here, Mongo-Express UI application is deployed and connected with the MongoDB Database.
+9. Now For Public, We deployed the `Nginx Ingress Controller` using Helm Charts.
+    Take Refrence From Here - `https://github.com/nginxinc/kubernetes-ingress/tree/main/deployments/helm-chart`.
+10. Create Nginx-Ingress Service `nginx-ingress-service.yaml` for Route the Traffic for path.
+11. Deploye the Nginx-Ingress Service File.
+    `kubectl apply -f nginx-ingress-service.yaml`
+
+Your Application is now available to access from outside world using the hostname provide in the nginx-ingress-service file. 

@@ -1,0 +1,6 @@
+architecture: replicaset
+replicaCount: 3
+persistence:
+    storageClass: "kubernetes.io/aws-ebs"
+auth:
+    rootPassword: secret-root-pwd
