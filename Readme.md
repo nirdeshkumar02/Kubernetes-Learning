@@ -1,7 +1,8 @@
 Learning Kubernetes with Projects
 =====================================
 
-### MONGO-APP
+MONGO-APP
+===========
 It is a simple k8s application where we are connecting mongodb to mongo ui with internal service and allowed users to browse the mongo-ui with loadbalancer service.
 #### Application Workflow
 ![Mongo-App Workflow](https://github.com/nirdeshkumar02/Kubernetes-Learning/blob/master/k8-mongo-app.png)
@@ -17,7 +18,8 @@ It is a simple k8s application where we are connecting mongodb to mongo ui with 
 
 Now, You can access the mongo-express UI connected with the mongoDB Application.
 
-### HELM-MONGO-APP
+HELM-MONGO-APP
+===============
 Its a simple helm application which is helpful in deploying same above application but in less code because of helm charts. We used helm charts to deploy mongoDB Application As StateFul Set with 3 Replication and for data persistent used Cloud-Storage.
 Mongo-Express is a UI Application which will be deployed as Deployment Component with service to allow traffic and connect to mongoDB StateFul Set as an Internal Service.
 For Public, We Will Use Ingress Service which will forward the traffic to Mongo-Express Service Port and it will route the data to MongoDB using Internal Service.
@@ -53,3 +55,26 @@ For Public, We Will Use Ingress Service which will forward the traffic to Mongo-
     ```
 
 Your Application is now available to access from outside world using the hostname provide in the nginx-ingress-service file. 
+
+Deploying Private Docker Image to Kubernetes
+=============================================
+Let We Build a CICD Pipeline which Checkout the code from GitHub, Do Some Test, Build/Package the Application and Pushed image to Private Repository like Docker Private Registry, AWS ECR etc... Now, This Project is all about how can you deploy this private image to Kubernetes.
+
+#### There are two steps through which you can authenticate yourself and Deploy the image on K8s -
+1. Create Secret Component which contains credential for Docker Registry.
+2. Configure Deployment/Pod to use Secret using `imagePullSecrets`.
+
+#### Prerquisites - You should have a Private Registry having Image whether it is AWS ECR or Docker Private Registry.
+
+#### Steps
+1. Login to your private registry -
+#### If You are using AWS ECR as Your Private Registry
+    ```
+    # Print Full Docker Login Command For AWS ECR
+    aws ecr get-login
+    # Now, Copy that full command from the terminal and Run it.
+    ```
+#### If You are using Docker Private Registry
+    ```
+    docker login -u <username> -p <password>
+    ```
