@@ -125,3 +125,40 @@ Let We Build a CICD Pipeline which Checkout the code from GitHub, Do Some Test, 
     ```
     kubectl apply -f <deployment-fileName>
     ```
+
+SETUP-PROMETHEUS-MONITORING
+=============================
+This Project is handson How can we deploy monitoring tool Prometheus with K8s Operator and Helm. In this Project, we will look on -
+- Insalled Prometheus Operator Helm Chart
+- Access Grafana UI (Configure Port Forward)
+- Access Prometheus UI (Configure Port Forward)
+
+#### Ways to deploy the prometheus in k8s
+1. Creating all configuration file yourself and execute them in the right order like prometheus, grafana, alertmanager, configMap, Secrets, Services.
+2. Using an operator. It will manage all prometheus component for stateful application.
+3. Using the helm chart to deploy operator.
+
+- We will deploy the promethus with Helm Chart.
+
+#### Steps
+1. install the operator using helm chart. It will deploy all the parts required to prometheus.
+    - Here 2 Stateful Set - Prometheus and AlertManager.
+    - Also 2 Deployment - Kube-State-Metrics, Grafana.
+    - Also 1 DeamonSet - Prometheus Node Exportor.
+    ```
+    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+    helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+    helm repo update
+    helm install prometheus prometheus-community/kube-prometheus-stack --version "9.4.1"
+    ```
+2. Now, You can access the deployment, statefull set etc and check the configuration.
+3. For Access the Grafana UI you can use port-forwarding.
+    ```
+    kubectl port-forward deployment/prometheus-grafana 3000
+    username - admin
+    password - prom-operator
+    ```
+4. For Access the Prometheus UI using port-forwarding.
+    ```
+    kubectl port-forward prometheus-prometheus-prometheus-oper-prometheus-0 9090
+    ```
