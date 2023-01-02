@@ -162,3 +162,16 @@ This Project is handson How can we deploy monitoring tool Prometheus with K8s Op
     ```
     kubectl port-forward prometheus-prometheus-prometheus-oper-prometheus-0 9090
     ```
+
+DEPLOYING-MICROSERVICES-APPLICATION
+====================================
+For Deploying a microservices based application, we need to figure out some queries to setup an architecture.
+1. How microservices are connected to each other?
+2. Image Name for each microservices.
+3. What environment variables and ports of each microservices expects?
+
+So, After knowing all queries, Create Deployment Config and Service Config for each microservices and connect them to each other.
+#### Microservice Application Workflow
+![Microservice-Application Workflow](https://github.com/nirdeshkumar02/Kubernetes-Learning/blob/master/microservices.png)
+
+For External Users, we create an external service which will connect to our frontend internal service "ClusterIP" and forward the request.
