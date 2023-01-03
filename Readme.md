@@ -221,3 +221,54 @@ The project folder contains bad practice of configuration file which can't be us
 5. Don't Expose your nodePort. Use type LoadBalancer.
 6. Always Deploy more than 1 replicas.
 7. Always Use more than 1 worker node.
+
+HELM CHART CREATION FOR MICROSERVICES
+=======================================
+In Previous Project, We have 10 configuration files for Deployment and Services with respect to different microservices. It is tediuous task to create multiple configuration files as they have same data with some changes like, metadata-name, selector, ports etc.
+So, By creating helm chart for the microservices application, it will make our work handy because we are reusing the single configuration.
+#### STEPS
+1. Create the helm chart structure in microservices-helm-charts folder.
+    ```
+    helm create microservices 
+    helm create redis
+    ```
+2. Now, Inside the helm folder, under the templates we will create the template for deployment and service configuration.
+3. Now, in values.yaml file set values of variable name used in deployment and service config file and use them for deploying diff microservices.
+4. Now, Validate the entered value through helm whether its correct or not
+    ```
+    "helm template helps in render chart templates locally and display the output"
+    helm template -f <service-file> <chart-name>
+    example - helm template -f values/email-service-values.yaml charts/microservices
+    ```
+5. Install the helm chart by creating a script file `install.sh` and add all install commands for each config file.
+    ```sh
+    helm install -f values/<fileName> <serviceName> charts/<microservice/redis>
+    example - helm install -f values/email-service-values.yaml emailService charts/microservices
+    ```
+6. To Unistall the charts, again create `uninstall.sh` and provide the commands for each config.
+    ```sh
+    helm uninstall releaseName
+    example - helm uninsall emailService
+    ```
+
+#### HELM COMMANDS
+- Set HELM Values ```helm template -f values/email-service-values.yaml --set appReplicas=3 charts/microservices```
+- Validate HELM File Syntax ```helm lint -f values/email-service-values.yaml charts/microservices```
+- Install HELM CHART ```helm install -f values/email-service-values.yaml emailservice charts/microservices```
+- Check Generated Manifest without Installing Chart ```helm install --dry-run -f values/redis-values.yaml rediscart charts/redis```
+
+#### DEPLOYING MICROSERVICE CHARTS WITH HELMFILE
+Helm install for each microservice deployement is the tedious task and unhandy So, we are deploying the microservices through helmfile.
+Through HelmFile we can deploy the application in the automated way, We just need to refrence the charts to values and service name.
+
+- Helmfile - It is a declarative way for deploying helm charts. 
+We just need to declare a definition of an entire k8s cluster.
+
+- install the helmfile tool and then using tool we are deploying helmfile
+- Install the helmfile ```helmfile sync```
+- Unistall the helmfile ```helmfile destroy```
+- Using `helmfile` we can add it to CICD and build the application.
+
+#### We can host the helm chart to the git repository - with 2 options
+1. With your application code.
+2. Seperate Git Repo for helm charts.
