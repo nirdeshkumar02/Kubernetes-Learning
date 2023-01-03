@@ -173,5 +173,51 @@ For Deploying a microservices based application, we need to figure out some quer
 So, After knowing all queries, Create Deployment Config and Service Config for each microservices and connect them to each other.
 #### Microservice Application Workflow
 ![Microservice-Application Workflow](https://github.com/nirdeshkumar02/Kubernetes-Learning/blob/master/microservices.png)
-
+The Application Code we used for this microservice application is "OPEN SOURCE GOOGLE SAMPLE CODE"
 For External Users, we create an external service which will connect to our frontend internal service "ClusterIP" and forward the request.
+
+The project folder contains bad practice of configuration file which can't be use for production and security purposes. So Now To remove the bad practices make these changes -
+1. Provide Tag to images under container, otherwise every time it will fatch the latest tag.
+2. Liveness Probe for each container to check the application inside the pod is running or not.
+    ```yml
+    livenessProbe:
+        periodSeconds: 5
+        exec:
+            command: ["/bin/grpc_health_probe", "-addr=:port"]
+    ```
+    for redis cluster
+    ```yml
+    livenessProbe:
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        tcpSocket:
+            port: 6379
+    ```
+3. Rediness Probe for each container to check whether the application inside the pod is ready to serve or not.
+    ```yml
+    readinessProbe:
+        periodSeconds: 5
+        exec:
+            command: ["/bin/grpc_health_probe", "-addr=:port"]
+    ```
+    for redis cluster
+    ```yml
+    readinessProbe:
+        initialDelaySeconds: 5
+        periodSeconds: 5
+        tcpSocket:
+            port: 6379
+    ```
+4. Provide Resource Request and Limits for each container according to their requiremets.
+    ```yml
+    resources:
+        requests:
+            cpu: 100m
+            memory: 64Mi
+        limits:
+            cpu: 200m
+            memory: 128Mi
+    ```
+5. Don't Expose your nodePort. Use type LoadBalancer.
+6. Always Deploy more than 1 replicas.
+7. Always Use more than 1 worker node.
