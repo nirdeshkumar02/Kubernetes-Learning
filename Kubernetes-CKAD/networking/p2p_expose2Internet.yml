@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ntn-networking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      env: deploy
+  template:
+    metadata:
+      name: ntn
+      labels:
+        env: deploy
+    spec:
+      containers:
+        - name: ntn-continaer
+          image: httpd
+          ports:
+            - containerPort: 80

@@ -1,0 +1,12 @@
+kind: Pod                              
+apiVersion: v1                     
+metadata:                           
+  name: testpod
+  annotations: 
+    description: Our first testpod is going to be created.    
+spec:                                    
+  containers:                      
+    - name: c0                     
+      image: ubuntu              
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Bhupinder; sleep 5 ; done"]
+  restartPolicy: Never         # Defaults to Always

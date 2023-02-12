@@ -1,0 +1,18 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: replication
+spec:
+  replicas: 2
+  selector: 
+    myname: Nirdesh
+  template:
+    metadata:
+      name: replica-pod
+      labels: 
+        myname: Nirdesh 
+    spec:
+      containers:
+        - name: replica-container
+          image: ubuntu
+          command: ["/bin/bash","-c","while true; do echo Hello-Nirdesh; sleep 5; done"]

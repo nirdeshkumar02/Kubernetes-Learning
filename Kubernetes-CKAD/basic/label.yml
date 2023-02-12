@@ -1,0 +1,14 @@
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: labelpod
+  annotations:
+    description: THis Pod will have the lable so that we can access the Pod quickly
+  labels:
+    env: dev
+    class: pods
+spec:
+  containers: 
+   - name: dev-pod
+     image: ubuntu
+     command: ["/bin/bash","-c", "while true; do echo Hello-Pod; sleep 5; done"] 

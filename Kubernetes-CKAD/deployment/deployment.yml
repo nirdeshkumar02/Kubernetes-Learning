@@ -1,0 +1,19 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mydeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: deployment
+  template:
+    metadata: 
+      name: deploy-testpod
+      labels:
+        name: deployment
+    spec:
+      containers:
+        - name: deploy-cont
+          image: centos
+          command: ["/bin/bash","-c","while true;do echo Hey_deploy_nirdesh;sleep 5;done"]

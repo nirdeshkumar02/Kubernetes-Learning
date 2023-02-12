@@ -1,0 +1,13 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: c2c-networking
+spec:
+  containers:
+    - name: ubuntu-server
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hello-Nirdesh; sleep 5 ; done"]
+    - name: httpd-server
+      image: httpd
+      ports:
+       - containerPort: 80

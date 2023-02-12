@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata: 
+  name: testpod3
+  annotations:
+    description: This pods shows how can pass environment variable to the containers.
+spec:
+  containers:
+    - name: c03
+      image: ubuntu
+      command: ["/bin/bash", "-c", "while true; do echo Hey-Nirdesh; sleep5; done"]
+      env:
+        - name: MYNAME
+          value: NIRDESH
+

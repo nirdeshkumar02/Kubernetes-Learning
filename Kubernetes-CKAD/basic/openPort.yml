@@ -1,0 +1,12 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: testpod4
+  annotations: 
+    description: Creating a pod for httpd 
+spec:
+  containers:
+    - name: httpd-server
+      image: httpd
+      ports:
+        - containerPort: 80
